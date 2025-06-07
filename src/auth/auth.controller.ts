@@ -1,4 +1,4 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { ClientDatabaseService } from 'src/client-database/client-database.service';
 
 @Controller('auth')
