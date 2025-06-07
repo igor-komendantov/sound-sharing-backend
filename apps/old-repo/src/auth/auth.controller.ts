@@ -1,13 +1,20 @@
-import { Controller, Get } from '@nestjs/common';
-import { ClientDatabaseService } from 'src/client-database/client-database.service';
+import { Body, Controller, Post } from '@nestjs/common';
+import { AuthService } from './auth.service';
+import { RegisterAccountDto } from './dto/register-account.dto';
+import { ProfileService } from 'src/profile/profile.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly db: ClientDatabaseService) {}
+  constructor(
+    private readonly auth: AuthService,
+    private readonly profileService: ProfileService,
+  ) {}
 
-  @Get('create-account')
-  async createAccount() {
-    const profile = await this.db.profiles.findFirst();
-    return profile;
+  @Post('register-account')
+  async registerAccount(@Body() dto: RegisterAccountDto) {
+    const account = await this.auth.registerAccount(dto);
+    const profile = await this.profileService.createInitialProfile(account.id);
+
+    return { account, profile };
   }
 }
