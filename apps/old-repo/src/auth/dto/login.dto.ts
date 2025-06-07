@@ -1,7 +1,7 @@
 import { IsEmail } from 'class-validator';
 import { PasswordDto } from './password.dto';
 
-export class RegisterAccountDto extends PasswordDto {
+export class LoginDto extends PasswordDto {
   @IsEmail()
   email: string;
 }
