@@ -47,6 +47,15 @@ export class AuthService {
 
     const { passwordHash } = account;
 
-    return '123';
+    const isCorrectPassword = await this.passwordService.verifyPassword(
+      password,
+      passwordHash,
+    );
+
+    if (!isCorrectPassword) {
+      throw new BadRequestException("Password isn't correct");
+    }
+
+    return account;
   }
 }
