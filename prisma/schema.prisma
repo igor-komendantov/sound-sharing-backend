@@ -21,7 +21,6 @@ model Accounts {
 model Profiles {
   id        Int      @id @default(autoincrement())
   nickname  String   @unique @db.VarChar(30)
-  avatarUrl String?  @db.VarChar(2048)
   account   Accounts @relation(fields: [accountId], references: [id])
   accountId Int      @unique
 }
