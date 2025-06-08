@@ -4,9 +4,10 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { ClientDatabaseModule } from './client-database/client-database.module';
 import { FakeAuthMiddleware } from './auth/authentication/fake-auth.middleware';
+import { ProfileModule } from './profile/profile.module';
 
 @Module({
-  imports: [ClientDatabaseModule, AuthModule],
+  imports: [ClientDatabaseModule, AuthModule, ProfileModule],
   controllers: [AppController],
   providers: [AppService],
 })
