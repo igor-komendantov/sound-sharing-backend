@@ -1,0 +1,32 @@
+services:
+  db:
+    image: postgres:latest
+    container_name: postgres_db
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: nest_app
+    ports:
+      - '3000:3000'
+      - '5555:5555' # Prisma Studio
+    depends_on:
+      - db
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+      - /app/node_modules # исключаем локальные node_modules внутри volume
+    command: npm run start:dev:docker
+
+volumes:
+  postgres_data:
