@@ -1,0 +1,11 @@
+{
+  "name": "old-repo",
+  "root": "apps/old-repo",
+  "sourceRoot": "apps/old-repo/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "nx:noop"
+    }
+  }
+}
