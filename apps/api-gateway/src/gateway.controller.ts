@@ -3,6 +3,8 @@ import { AuthService } from './auth/auth.service';
 import { ProxyService } from './proxy/proxy.service';
 import { Request, Response } from 'express';
 
+import { serviceConfig } from './services.config';
+
 @Controller('api')
 export class GatewayController {
   constructor(
@@ -44,14 +46,14 @@ export class GatewayController {
     }
   }
 
-  // Метод для определения целевого сервиса по пути запроса
+  // Метод для получения целевого сервиса из конфигурации
   private getTargetService(path: string): string {
     if (path.startsWith('/order')) {
-      return 'http://localhost:4000'; // URL для order-service
+      return serviceConfig.orderService;
     } else if (path.startsWith('/payment')) {
-      return 'http://localhost:5000'; // URL для payment-service
+      return serviceConfig.paymentService;
     } else if (path.startsWith('/auth')) {
-      return 'http://localhost:3000'; // URL для auth-service
+      return serviceConfig.authService;
     }
     return ''; // Если сервис не найден
   }
