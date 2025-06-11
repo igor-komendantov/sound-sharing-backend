@@ -1,0 +1,20 @@
+services:
+  security-gateway-service:
+    build: ./apps/security-gateway
+    networks:
+      - security-gateway
+    env_file:
+      - ./apps/security-gateway/.env
+    depends_on:
+      - accounts-db
+
+  accounts-db:
+    image: postgres:latest
+    networks:
+      - security-gateway
+    env_file:
+      - ./apps/security-gateway/.env
+
+networks:
+  security-gateway:
+    driver: bridge
