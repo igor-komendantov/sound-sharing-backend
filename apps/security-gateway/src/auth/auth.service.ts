@@ -1,15 +1,14 @@
-import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { AccountsDatabaseService } from 'src/accounts-database/accounts-database.service';
 
 @Injectable()
 export class AuthService {
-  private prisma = new PrismaClient();
+  constructor(private readonly accountsDb: AccountsDatabaseService) {}
+  async fakeAuth() {
+    const user = await this.accountsDb.accounts.findFirst();
 
-  async fakeAuth(): Promise<any> {
-    // Симуляция получения пользователя из базы данных
-    const user = await this.prisma.accounts.findFirst();
     if (!user) {
-      throw new Error('Unauthorized');
+      throw new UnauthorizedException();
     }
     return user;
   }

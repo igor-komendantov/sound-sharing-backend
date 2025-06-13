@@ -1,4 +1,4 @@
-import { Controller, Get, Req, Res, UseGuards, Post } from '@nestjs/common';
+import { Controller, Req, Res, Post } from '@nestjs/common';
 import { AuthService } from './auth/auth.service';
 import { ProxyService } from './proxy/proxy.service';
 import { Request, Response } from 'express';
@@ -12,7 +12,6 @@ export class GatewayController {
     private readonly proxyService: ProxyService,
   ) {}
 
-  // Фейковая авторизация
   private async fakeAuth(req: Request): Promise<any> {
     const user = await this.authService.fakeAuth();
     req.user = user;
@@ -22,17 +21,14 @@ export class GatewayController {
   @Post('*')
   async handlePostRequest(@Req() req: Request, @Res() res: Response) {
     try {
-      // Фейковая авторизация
       await this.fakeAuth(req);
 
-      // Определение целевого сервиса по пути
       const targetService = this.getTargetService(req.path);
 
       if (!targetService) {
         return res.status(404).json({ message: 'Service not found' });
       }
 
-      // Прокси запрос в нужный микросервис
       const response = await this.proxyService.proxyRequest(
         targetService,
         req.method,
@@ -46,15 +42,15 @@ export class GatewayController {
     }
   }
 
-  // Метод для получения целевого сервиса из конфигурации
   private getTargetService(path: string): string {
-    if (path.startsWith('/order')) {
-      return serviceConfig.orderService;
-    } else if (path.startsWith('/payment')) {
-      return serviceConfig.paymentService;
-    } else if (path.startsWith('/auth')) {
-      return serviceConfig.authService;
-    }
-    return ''; // Если сервис не найден
+    // if (path.startsWith('/order')) {
+    //   return serviceConfig.orderService;
+    // } else if (path.startsWith('/payment')) {
+    //   return serviceConfig.paymentService;
+    // } else if (path.startsWith('/auth')) {
+    //   return serviceConfig.authService;
+    // }
+    // return ''; // Если сервис не найден
+    return serviceConfig.orderService;
   }
 }

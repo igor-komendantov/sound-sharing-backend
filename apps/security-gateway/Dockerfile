@@ -2,13 +2,17 @@ FROM node:24
 
 WORKDIR /usr/src/app
 
+COPY package.json ./
+
 RUN npm install -g pnpm
 
-RUN pnpm install --frozen-lockfile
+RUN pnpm install
 
 COPY . .
 
 RUN npx prisma generate
+
+RUN pnpm run build
 
 EXPOSE 3000
 
