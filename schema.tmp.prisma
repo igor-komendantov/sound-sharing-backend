@@ -1,0 +1,83 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Accounts {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  email     String   @unique @db.VarChar(255)
+  passwordHash  String   @db.VarChar(100)
+
+  profile    Profiles?
+  soundPacks SoundPacks[]
+}
+
+model Profiles {
+  id        Int      @id @default(autoincrement())
+  nickname  String   @unique @db.VarChar(30)
+  account   Accounts @relation(fields: [accountId], references: [id])
+  accountId Int      @unique
+}
+
+model SoundPacks {
+  id          Int      @id @default(autoincrement())
+  name        String   @db.VarChar(100)
+  description String?  @db.VarChar(1000)
+  avatarUrl   String?  @db.VarChar(2048)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  createdBy   Accounts @relation(fields: [createdById], references: [id])
+  createdById Int
+
+  sounds Sounds[]
+}
+
+model Sounds {
+  name String @db.VarChar(100)
+
+  soundPack   SoundPacks @relation(fields: [soundPackId], references: [id])
+  soundPackId Int
+
+  id     Int    @id @default(autoincrement())
+  uuid   String @unique @default(uuid())
+  format String @db.VarChar(10)
+
+  // tags        Tags[]     @relation("SampleTags")
+  // systemTags  SystemTags[] @relation("SystemTags")
+  // userTags    UserTags[] @relation("UserTags")
+}
+
+// model Tags {
+//   id       Int      @id @default(autoincrement())
+//   name     String   @unique @db.VarChar(50)
+//   approved Boolean  @default(false)
+//   tagType  TagTypes
+
+//   samples  Sounds[]  @relation("SampleTags")
+// }
+
+// model SystemTags {
+//   id       Int      @id @default(autoincrement())
+//   name     String   @unique @db.VarChar(50)
+//   samples  Sounds[]  @relation("SystemTags")
+// }
+
+// model UserTag {
+//   id           Int        @id @default(autoincrement())
+//   name         String     @db.VarChar(50)
+//   approved     Boolean    @default(false)
+
+//   approvedBy   Moderators? @relation(fields: [approvedById], references: [id])
+//   approvedById Int?
+
+//   samples      Sounds[]    @relation("UserTags")
+
+//   @@unique([name])
+// }
