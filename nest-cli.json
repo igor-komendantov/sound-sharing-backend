@@ -28,13 +28,22 @@
         "tsConfigPath": "libs/contracts/tsconfig.lib.json"
       }
     },
-    "users": {
+    "profile": {
       "type": "application",
-      "root": "apps/users",
+      "root": "apps/profile",
       "entryFile": "main",
-      "sourceRoot": "apps/users/src",
+      "sourceRoot": "apps/profile/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/users/tsconfig.app.json"
+        "tsConfigPath": "apps/profile/tsconfig.app.json"
+      }
+    },
+    "user-profile": {
+      "type": "application",
+      "root": "apps/user-profile",
+      "entryFile": "main",
+      "sourceRoot": "apps/user-profile/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/user-profile/tsconfig.app.json"
       }
     }
   }
