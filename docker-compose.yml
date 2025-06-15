@@ -8,12 +8,12 @@ services:
     depends_on:
       - accounts-db
 
-  accounts-db:
-    image: postgres:latest
-    networks:
-      - api-gateway
-    env_file:
-      - ./apps/api-gateway/.env
+  # accounts-db:
+  #   image: postgres:latest
+  #   networks:
+  #     - api-gateway
+  #   env_file:
+  #     - ./apps/api-gateway/.env
 
 networks:
   api-gateway:
