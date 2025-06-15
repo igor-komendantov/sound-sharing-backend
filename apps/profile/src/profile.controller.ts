@@ -1,12 +1,13 @@
 import { Controller, Get } from '@nestjs/common';
 import { ProfileService } from './profile.service';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 
 @Controller()
 export class ProfileController {
   constructor(private readonly profileService: ProfileService) {}
 
-  @Get()
-  getHello(): string {
-    return this.profileService.getHello();
+  @MessagePattern('hello.world')
+  helloWorld(@Payload() payload: object) {
+    return JSON.stringify(payload);
   }
 }

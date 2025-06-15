@@ -1,7 +1,12 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { ProfileService } from './profile.service';
 
-@Controller('user')
+@Controller('profile')
 export class ProfileController {
-  constructor(private readonly userService: ProfileService) {}
+  constructor(private readonly profileService: ProfileService) {}
+
+  @Get(':id')
+  test(@Param('id') id: string) {
+    return this.profileService.getHello(id);
+  }
 }
