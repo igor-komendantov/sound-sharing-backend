@@ -1,0 +1,20 @@
+services:
+  api-gateway-service:
+    build: ./apps/api-gateway
+    networks:
+      - api-gateway
+    env_file:
+      - ./apps/api-gateway/.env
+    depends_on:
+      - accounts-db
+
+  accounts-db:
+    image: postgres:latest
+    networks:
+      - api-gateway
+    env_file:
+      - ./apps/api-gateway/.env
+
+networks:
+  api-gateway:
+    driver: bridge
