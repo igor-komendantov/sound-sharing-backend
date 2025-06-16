@@ -1,0 +1,1 @@
+export const DI_ACCOUNT_MS_CLIENT = Symbol('DI_ACCOUNT_MS_CLIENT');
