@@ -10,6 +10,15 @@
   "monorepo": true,
   "root": "apps/api-gateway",
   "projects": {
+    "account": {
+      "type": "application",
+      "root": "apps/account",
+      "entryFile": "main",
+      "sourceRoot": "apps/account/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/account/tsconfig.app.json"
+      }
+    },
     "api-gateway": {
       "type": "application",
       "root": "apps/api-gateway",
