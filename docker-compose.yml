@@ -1,20 +1,25 @@
 services:
   api-gateway-service:
     build: ./apps/api-gateway
-    networks:
-      - api-gateway
     env_file:
       - ./apps/api-gateway/.env
+
+  account-service:
+    build: ./apps/account
+    env_file:
+      - ./apps/account/.env
     depends_on:
       - accounts-db
 
-  # accounts-db:
-  #   image: postgres:latest
-  #   networks:
-  #     - api-gateway
-  #   env_file:
-  #     - ./apps/api-gateway/.env
+  accounts-db:
+    image: postgres:latest
+    restart: always
+    env_file:
+      - ./apps/account/.env
+    ports:
+      - "5432:5432"
+    volumes:
+      - accounts-db-data:/var/lib/postgresql/data
 
-networks:
-  api-gateway:
-    driver: bridge
+volumes:
+  accounts-db-data: {}
