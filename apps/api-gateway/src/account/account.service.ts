@@ -1,23 +1,18 @@
-import { Injectable } from '@nestjs/common';
-import { CreateAccountDto } from './dto/create-account.dto';
-import { UpdateAccountDto } from './dto/update-account.dto';
+import { Inject, Injectable } from '@nestjs/common';
+import { CreateAccountPayload } from './dto/create/create-account-payload.dto';
+import { ClientProxy } from '@nestjs/microservices';
+import { ACCOUNT_PATTERNS } from '@app/contracts/account';
+import { CreateAccountResponse } from './dto/create/create-account-response.dto';
 
 @Injectable()
 export class AccountService {
-  create(createAccountDto: CreateAccountDto) {
-    return 'This action adds a new account';
-  }
+  constructor(@Inject('ACCOUNT_CLIENT') private accountClient: ClientProxy) {}
 
-  findAll() {
-    return `This action returns all account`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} account`;
-  }
-
-  update(id: number, updateAccountDto: UpdateAccountDto) {
-    return `This action updates a #${id} account`;
+  create(createAccountDto: CreateAccountPayload) {
+    return this.accountClient.send<CreateAccountResponse, CreateAccountPayload>(
+      ACCOUNT_PATTERNS.CREATE,
+      createAccountDto,
+    );
   }
 
   remove(id: number) {

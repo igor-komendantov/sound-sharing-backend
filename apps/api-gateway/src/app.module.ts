@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { ProfileModule } from './profile/profile.module';
-import { AccountModule } from './account/account.module';
+import { ProfileGatewayModule } from './profile/profile-gateway.module';
+import { AccountGatewayModule } from './account/account-gateway.module';
 
 @Module({
-  imports: [ProfileModule, AccountModule],
+  imports: [ProfileGatewayModule, AccountGatewayModule],
   controllers: [],
   providers: [],
 })

@@ -16,4 +16,4 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
     ]),
   ],
 })
-export class AccountModule {}
+export class AccountGatewayModule {}
