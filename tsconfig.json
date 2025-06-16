@@ -24,10 +24,10 @@
       "@app/contracts/*": [
         "libs/contracts/src/*"
       ],
-      "@common/common": [
+      "@app/common": [
         "libs/common/src"
       ],
-      "@common/common/*": [
+      "@app/common/*": [
         "libs/common/src/*"
       ]
     }
